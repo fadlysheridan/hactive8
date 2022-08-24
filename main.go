@@ -3,19 +3,23 @@ package main
 import "fmt"
 
 func main() {
-	namaBanyak()
+	appenTest()
 }
 
-func namaBanyak() {
-	fadli := "fadli"
-	david := "david"
-	list := []*string{&fadli, &david}
+func appenTest() {
+	a := []string{"Hanif", "Bunda Manda", "Ayah Fadli"}
+	var b []*string
+	for i := 0; i < len(a); i++ {
+		b = append(b, &a[i])
+	}
+	fmt.Println(b)
 
-	function := func(l []*string) {
-		for _, v := range l {
+	function := func(params []*string) {
+		for _, v := range params {
 			fmt.Println(*v)
 		}
 	}
-	function(list)
+
+	function(b)
 
 }
