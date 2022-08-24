@@ -1,34 +1,53 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
 
 type data struct {
-	name string
-	umur string
+	name      string
+	pekerjaan string
+	alamat    string
+	alasan    string
 }
 
 func main() {
-	structTest()
+	structAssignment()
 }
 
-func structTest() {
-	a := []string{"Hanif", "Manda", "Fadli"}
-	var b []*data
+func structAssignment() {
 
-	for i := 0; i < len(a); i++ {
-		dataOrang := data{
-			name: a[i],
-		}
-
-		b = append(b, &dataOrang)
+	list := []data{
+		{
+			name:      "Fadli Ramadhan",
+			pekerjaan: "Programmer",
+			alamat:    "Bekasi",
+			alasan:    "Agar menjadi billgates",
+		},
+		{
+			name:      "Manda",
+			pekerjaan: "Cheft",
+			alamat:    "Jakarta",
+			alasan:    "Belajar Pemrograman",
+		},
+		{
+			name:      "Hanif",
+			pekerjaan: "Direktur",
+			alamat:    "Depok",
+			alasan:    "Menjadi Saingan Jackma",
+		},
 	}
 
-	function := func(params []*data) {
-		for _, v := range params {
-			fmt.Println(v.name)
+	args := os.Args
+	indexArgs := args[1]
+	index, _ := strconv.Atoi(indexArgs)
+
+	for i, t := range list {
+		if i == index-1 {
+			fmt.Println(t)
 		}
 	}
-
-	function(b)
 
 }
