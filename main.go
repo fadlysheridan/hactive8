@@ -2,21 +2,30 @@ package main
 
 import "fmt"
 
-func main() {
-	appenTest()
+type data struct {
+	name string
+	umur string
 }
 
-func appenTest() {
-	a := []string{"Hanif", "Bunda Manda", "Ayah Fadli"}
-	var b []*string
-	for i := 0; i < len(a); i++ {
-		b = append(b, &a[i])
-	}
-	fmt.Println(b)
+func main() {
+	structTest()
+}
 
-	function := func(params []*string) {
+func structTest() {
+	a := []string{"Hanif", "Manda", "Fadli"}
+	var b []*data
+
+	for i := 0; i < len(a); i++ {
+		dataOrang := data{
+			name: a[i],
+		}
+
+		b = append(b, &dataOrang)
+	}
+
+	function := func(params []*data) {
 		for _, v := range params {
-			fmt.Println(*v)
+			fmt.Println(v.name)
 		}
 	}
 
