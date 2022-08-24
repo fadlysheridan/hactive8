@@ -7,9 +7,15 @@ func main() {
 }
 
 func namaBanyak() {
-	names := []string{"fadli", "fisa", "rafi", "kaadek", "kevin", "iqbal", "joko", "budi", "ismed", "david"}
+	fadli := "fadli"
+	david := "david"
+	list := []*string{&fadli, &david}
 
-	for i, t := range names {
-		fmt.Println(i+1, "Name", t)
+	function := func(l []*string) {
+		for _, v := range l {
+			fmt.Println(*v)
+		}
 	}
+	function(list)
+
 }
