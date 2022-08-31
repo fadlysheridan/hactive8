@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -51,8 +52,9 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 
 		userData = append(userData, newUser)
 
-		json.NewEncoder(w).Encode(newUser)
-		return
+		//json.NewEncoder(w).Encode(newUser)
+		print := fmt.Sprintf(newUser.Name + " berhasil didaftarkan")
+		fmt.Fprint(w, print)
 	}
 
 }
