@@ -1,53 +1,58 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"strconv"
+	"encoding/json"
+	"net/http"
 )
 
-type data struct {
-	name      string
-	pekerjaan string
-	alamat    string
-	alasan    string
+var PORT = "localhost:8080"
+
+type User struct {
+	ID   string
+	Name string
+}
+
+var userData = []User{
+	{ID: "1", Name: "fadli"},
+	{ID: "2", Name: "joko"},
 }
 
 func main() {
-	structAssignment()
+
+	http.HandleFunc("/getuserdata", getUserData)
+	http.HandleFunc("/createuser", createUser)
+	http.ListenAndServe(PORT, nil)
+
 }
 
-func structAssignment() {
+func getUserData(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 
-	list := []data{
-		{
-			name:      "Fadli Ramadhan",
-			pekerjaan: "Programmer",
-			alamat:    "Bekasi",
-			alasan:    "Agar menjadi billgates",
-		},
-		{
-			name:      "Manda",
-			pekerjaan: "Cheft",
-			alamat:    "Jakarta",
-			alasan:    "Belajar Pemrograman",
-		},
-		{
-			name:      "Hanif",
-			pekerjaan: "Direktur",
-			alamat:    "Depok",
-			alasan:    "Menjadi Saingan Jackma",
-		},
+	if r.Method == "GET" {
+		json.NewEncoder(w).Encode(userData)
+		return
 	}
 
-	args := os.Args
-	indexArgs := args[1]
-	index, _ := strconv.Atoi(indexArgs)
+	http.Error(w, "Invalid method", http.StatusBadRequest)
 
-	for i, t := range list {
-		if i == index-1 {
-			fmt.Println(t)
+}
+
+func createUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	if r.Method == "POST" {
+		id := r.FormValue("id")
+		name := r.FormValue("name")
+
+		newUser := User{
+			ID:   id,
+			Name: name,
 		}
+
+		userData = append(userData, newUser)
+
+		json.NewEncoder(w).Encode(newUser)
+		return
 	}
 
 }
